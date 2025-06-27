@@ -35,7 +35,7 @@ public final class BuildDataHelper {
      * @return the build data related to the project, null if not found
      */
     public static BuildData calculateBuildData(
-        String parentName, String parentFullName, List<BuildData> buildDataList
+        int buildNumber, String parentName, String parentFullName, List<BuildData> buildDataList
     ) {
 
         if (buildDataList == null) {
@@ -46,6 +46,8 @@ public final class BuildDataHelper {
             return buildDataList.get(0);
         }
 
+        // This relies upon very specific folder naming schemes and should be replaced with a more generic solution
+        // See https://issues.jenkins-ci.org/browse/JENKINS-60534
         String projectName = parentFullName.replace(parentName, "");
 
         if (projectName.endsWith("/")) {
@@ -57,6 +59,15 @@ public final class BuildDataHelper {
 
             for (String remoteUrl : remoteUrls) {
                 if (remoteUrl.contains(projectName)) {
+                    return buildData;
+                }
+            }
+        }
+
+        // Sometimes the previous build data is attached along with the current one, and we just want the current one
+        for (BuildData buildData : buildDataList) {
+            for (Build build : buildData.buildsByBranchName.values()) {
+                if (build.getBuildNumber() == buildNumber) {
                     return buildData;
                 }
             }
@@ -80,7 +91,7 @@ public final class BuildDataHelper {
         Job<?, ?> parent = build.getParent();
 
         BuildData buildData = calculateBuildData(
-            parent.getName(), parent.getFullName(), buildDataList
+            build.number, parent.getName(), parent.getFullName(), buildDataList
         );
 
         if (buildData == null) {
