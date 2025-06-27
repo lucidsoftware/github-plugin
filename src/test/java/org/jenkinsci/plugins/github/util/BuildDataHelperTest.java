@@ -41,7 +41,7 @@ public class BuildDataHelperTest {
 			buildDataList.add(projectBuildData);
 
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", "project/master", buildDataList);
+				1, "master", "project/master", buildDataList);
 
 			assertThat("should fetch project build data", buildData, is(projectBuildData));
 		}
@@ -66,7 +66,7 @@ public class BuildDataHelperTest {
 			Collections.addAll(buildDataList, sharedLibBuildData, realProjectBuildData);
 
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", "project/master", buildDataList);
+				1, "master", "project/master", buildDataList);
 
 			assertThat("should not fetch shared library build data", buildData, not(sharedLibBuildData));
 			assertThat("should fetch project build data", buildData, is(realProjectBuildData));
@@ -76,7 +76,7 @@ public class BuildDataHelperTest {
 		@Issue("JENKINS-53149")
 		public void shouldCalculateDataBuildFromProjectWithEmptyBuildDatas() throws Exception {
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", "project/master", Collections.EMPTY_LIST);
+				1, "master", "project/master", Collections.EMPTY_LIST);
 
 			assertThat("should be null", buildData, nullValue());
 		}
@@ -85,7 +85,7 @@ public class BuildDataHelperTest {
 		@Issue("JENKINS-53149")
 		public void shouldCalculateDataBuildFromProjectWithNullBuildDatas() throws Exception {
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", "project/master", null);
+				1, "master", "project/master", null);
 
 			assertThat("should be null", buildData, nullValue());
 		}
@@ -110,7 +110,7 @@ public class BuildDataHelperTest {
 			buildDataList.add(projectBuildData);
 
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", ORGANIZATION_NAME + "/project/master", buildDataList);
+				1, "master", ORGANIZATION_NAME + "/project/master", buildDataList);
 
 			assertThat("should fetch project build data", buildData, is(projectBuildData));
 		}
@@ -135,7 +135,7 @@ public class BuildDataHelperTest {
 			Collections.addAll(buildDataList, sharedLibBuildData, realProjectBuildData);
 
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", ORGANIZATION_NAME + "/project/master", buildDataList);
+				1, "master", ORGANIZATION_NAME + "/project/master", buildDataList);
 
 			assertThat("should not fetch shared library build data", buildData, not(sharedLibBuildData));
 			assertThat("should fetch project build data", buildData, is(realProjectBuildData));
@@ -145,7 +145,7 @@ public class BuildDataHelperTest {
 		@Issue("JENKINS-53149")
 		public void shouldCalculateDataBuildFromProjectWithEmptyBuildDatas() throws Exception {
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", ORGANIZATION_NAME + "/project/master", Collections.EMPTY_LIST);
+				1, "master", ORGANIZATION_NAME + "/project/master", Collections.EMPTY_LIST);
 
 			assertThat("should be null", buildData, nullValue());
 		}
@@ -154,7 +154,7 @@ public class BuildDataHelperTest {
 		@Issue("JENKINS-53149")
 		public void shouldCalculateDataBuildFromProjectWithNullBuildDatas() throws Exception {
 			BuildData buildData = BuildDataHelper.calculateBuildData(
-				"master", ORGANIZATION_NAME + "/project/master", null);
+				1, "master", ORGANIZATION_NAME + "/project/master", null);
 
 			assertThat("should be null", buildData, nullValue());
 		}
